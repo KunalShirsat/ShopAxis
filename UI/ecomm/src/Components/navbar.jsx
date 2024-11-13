@@ -127,7 +127,7 @@ const Navbar = () => {
           <a href="#">AmazonBasics</a>
           <a href="#">Customer Service</a>
           <a href="#">Browsing History</a>
-          <a href="#">Kunal's Amazon.in</a>
+          <a href="#">Contact Developer</a>
         </div>
       </div>
     </div>

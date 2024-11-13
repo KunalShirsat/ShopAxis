@@ -1,30 +1,72 @@
 .your-addresses {
-    padding: 20px;
-  }
-  
-  .address-list {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .address-card, .add-address {
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 5px;
-    width: 300px;
-  }
-  
-  .address-actions {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .add-address input {
-    display: block;
-    width: 100%;
-    margin: 5px 0;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-  
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.address-list {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center; /* Center addresses horizontally */
+}
+
+.address-card, .add-address-card {
+  border: 1px dashed #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  width: 250px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.add-address-card {
+  background-color: #fafafa;
+  color: #666;
+}
+
+.add-icon {
+  font-size: 2rem;
+  color: #ccc;
+}
+
+.address-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.new-address-form {
+  max-width: 400px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center form content horizontally */
+}
+
+.new-address-form input {
+  display: block;
+  width: 300%;
+  margin: 8px 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.new-address-form button {
+  padding: 10px;
+  background-color: #e6c000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.new-address-form button:hover {
+  background-color: #005bb5;
+}
