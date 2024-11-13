@@ -1,0 +1,7 @@
+/* App.css */
+body {
+  background-image: url('');
+  background-size: cover;       /* Ensures image covers the entire area */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  background-position: center;  /* Centers the image */
+}
