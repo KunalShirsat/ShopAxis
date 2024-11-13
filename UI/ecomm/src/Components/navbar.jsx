@@ -25,11 +25,13 @@ const Navbar = () => {
       alert("An error occurred while searching.");
     }
   };
+  
   const handleAccountClick = () => {
-    navigate('/your-addresses'); // Navigate to YourAddresses page
+    navigate('/your-addresses');
   };
+  
   const handleLogolick = () => {
-    navigate('/'); // Navigate to Home page
+    navigate('/');
   };
 
   const handleKeyPress = (e) => {
@@ -39,17 +41,15 @@ const Navbar = () => {
   };
 
   const handleCartClick = () => {
-    navigate('/cart');  // Navigating to the Cart page
+    navigate('/cart');
   };
 
   return (
     <div className="navbar">
       <div className="navbar__belt">
         <div className="navbar__main">
-
           {/* Logo */}
-          <div className="navbar__logo"  onClick={handleLogolick}>
-          {/* <div className="navbar__logoClick" onClick={handleLogolick}> */}
+          <div className="navbar__logo" onClick={handleLogolick}>
             <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon" className="navbar__logoImage" />
           </div>
 
@@ -75,7 +75,7 @@ const Navbar = () => {
               placeholder="Search Amazon.in"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)} 
-              onKeyPress={handleKeyPress}  // Trigger search on 'Enter'
+              onKeyPress={handleKeyPress}
             />
             <button className="navbar__searchButton" onClick={handleSearch}>
               <i className="search-icon"></i>
@@ -92,9 +92,9 @@ const Navbar = () => {
 
             {/* Account */}
             <div className="navbar__option" onClick={handleAccountClick}>
-  <span className="navbar__optionLine1">Hello, Kunal</span>
-  <span className="navbar__optionLine2">Account & Lists</span>
-</div>
+              <span className="navbar__optionLine1">Hello, Kunal</span>
+              <span className="navbar__optionLine2">Account & Lists</span>
+            </div>
 
             {/* Returns & Orders */}
             <div className="navbar__option">
@@ -114,7 +114,20 @@ const Navbar = () => {
       {/* Bottom nav */}
       <div className="navbar__bottom">
         <div className="navbar__bottomLinks">
-          {/* Add bottom navigation links as needed */}
+          <a href="#">All</a>
+          <a href="#">Fresh Meat</a>
+          <a href="#">Buy Again</a>
+          <a href="#">Electronics</a>
+          <a href="#">Today's Deals</a>
+          <a href="#">MX Player</a>
+          <a href="#">Sell</a>
+          <a href="#">Gift Cards</a>
+          <a href="#">Gift Ideas</a>
+          <a href="#">Amazon Pay</a>
+          <a href="#">AmazonBasics</a>
+          <a href="#">Customer Service</a>
+          <a href="#">Browsing History</a>
+          <a href="#">Kunal's Amazon.in</a>
         </div>
       </div>
     </div>

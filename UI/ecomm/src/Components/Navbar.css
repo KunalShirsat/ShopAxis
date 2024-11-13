@@ -236,6 +236,51 @@
     background: #455a79;
     border-radius: 4px;
 }
+.navbar__bottom {
+  background-color: #232f3e;
+  padding: 10px 0;
+}
+
+.navbar__bottomLinks {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: white;
+}
+
+.navbar__bottomLinks a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 0 10px;
+}
+
+.navbar__bottomLinks a:hover {
+  text-decoration: underline;
+}
+.navbar__bottom {
+    background-color: #232f3e;
+    padding: 5px 0; /* Reduced padding for a slimmer look */
+  }
+  
+  .navbar__bottomLinks {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: white;
+  }
+  
+  .navbar__bottomLinks a {
+    color: white;
+    text-decoration: none;
+    font-size: 13px; /* Slightly smaller font size */
+    padding: 0 8px; /* Reduced padding between links */
+  }
+  
+  .navbar__bottomLinks a:hover {
+    text-decoration: underline;
+  }
+  
 
 /* Responsive Design */
 @media screen and (max-width: 1024px) {
