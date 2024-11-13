@@ -1,0 +1,259 @@
+.navbar {
+    background-color: #131921;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+.navbar__searchButton {
+    padding: 0;
+    border: none;
+    box-sizing: border-box;
+}
+.navbar__searchDropdown, .navbar__searchInput, .navbar__searchButton {
+    height: 100%;
+    box-sizing: border-box;
+}
+.navbar__searchInput {
+    padding: 0 10px;
+    border: none;
+    outline: none;
+}
+.navbar__search {
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+    height: 40px; /* Adjust as needed */
+    flex-grow: 1;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.navbar__searchDropdown, .navbar__searchInput, .navbar__searchButton {
+    height: 40px; /* Make sure height is consistent */
+}
+
+
+.navbar__belt {
+    padding: 0 15px;
+    height: 60px;
+}
+
+.navbar__main {
+    max-width: 1500px;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Logo */
+.navbar__logo {
+    padding: 5px 10px;
+    margin-right: 10px;
+}
+
+.navbar__logo:hover {
+    border: 1px solid white;
+    border-radius: 2px;
+}
+
+.navbar__logoImage {
+    width: 97px;
+    object-fit: contain;
+    margin-top: 12px;
+}
+
+/* Deliver Location */
+.navbar__deliver {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.navbar__deliver:hover {
+    border: 1px solid white;
+    border-radius: 2px;
+}
+
+.navbar__deliverContent {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5px;
+}
+
+.navbar__deliverLine1 {
+    font-size: 12px;
+    color: #ccc;
+}
+
+.navbar__deliverLine2 {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Search */
+.navbar__search {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+    height: 50px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.navbar__searchDropdown {
+    height: 100%;
+    padding: 0 10px;
+    background-color: #f3f3f3;
+    border: none;
+    border-right: 1px solid #cdcdcd;
+}
+
+.navbar__searchInput {
+    height: 100%;
+    width: 100%;
+    border: none;
+    padding: 0 10px;
+    font-size: 15px;
+}
+
+.navbar__searchButton {
+    height: 100%;
+    width: 45px;
+    background-color: #febd69;
+    border: none;
+    cursor: pointer;
+}
+
+.navbar__searchButton:hover {
+    background-color: #f3a847;
+}
+
+/* Right Container */
+.navbar__rightContainer {
+    display: flex;
+    align-items: center;
+}
+
+.navbar__language {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.navbar__language:hover {
+    border: 1px solid white;
+    border-radius: 2px;
+}
+
+.navbar__flag {
+    width: 20px;
+    margin-right: 5px;
+}
+
+.navbar__option {
+    padding: 5px 10px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar__option:hover {
+    border: 1px solid white;
+    border-radius: 2px;
+}
+
+.navbar__optionLine1 {
+    font-size: 12px;
+    color: #ccc;
+}
+
+.navbar__optionLine2 {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.navbar__cart {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.navbar__cart:hover {
+    border: 1px solid white;
+    border-radius: 2px;
+}
+
+.navbar__cartCount {
+    background-color: #f08804;
+    border-radius: 50%;
+    padding: 0 6px;
+    margin-right: 5px;
+    color: black;
+    font-weight: bold;
+}
+
+/* Bottom Navigation */
+.navbar__bottom {
+    background-color: #232f3e;
+    padding: 5px 15px;
+}
+
+.navbar__bottomLinks {
+    max-width: 1500px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+}
+
+.navbar__bottomLink {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    white-space: nowrap;
+    font-size: 14px;
+}
+
+.navbar__bottomLink:hover {
+    border: 1px solid white;
+    border-radius: 2px;
+}
+
+/* Scrollbar Styling */
+.navbar__bottomLinks::-webkit-scrollbar {
+    height: 4px;
+}
+
+.navbar__bottomLinks::-webkit-scrollbar-track {
+    background: #232f3e;
+}
+
+.navbar__bottomLinks::-webkit-scrollbar-thumb {
+    background: #455a79;
+    border-radius: 4px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+    .navbar__deliver {
+        display: none;
+    }
+    
+    .navbar__option {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .navbar__search {
+        display: none;
+    }
+    
+    .navbar__language {
+        display: none;
+    }
+}
