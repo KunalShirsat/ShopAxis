@@ -1,0 +1,41 @@
+.cart-container {
+    padding: 20px;
+  }
+  
+  .cart-item {
+    display: flex;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .cart-item-image {
+    width: 150px;
+    height: auto;
+    margin-right: 20px;
+  }
+  
+  .cart-item-details {
+    flex: 1;
+  }
+  
+  .cart-item-price {
+    color: #b12704;
+    font-weight: bold;
+  }
+  
+  .cart-item-mrp {
+    text-decoration: line-through;
+    color: #888;
+  }
+  
+  .quantity-control {
+    display: flex;
+    align-items: center;
+  }
+  
+  .delete-button {
+    background: rgb(255, 183, 0);
+    color: #007185;
+    cursor: pointer;
+  }
+  

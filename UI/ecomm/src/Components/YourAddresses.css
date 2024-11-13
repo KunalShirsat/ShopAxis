@@ -1,0 +1,30 @@
+.your-addresses {
+    padding: 20px;
+  }
+  
+  .address-list {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .address-card, .add-address {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    width: 300px;
+  }
+  
+  .address-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .add-address input {
+    display: block;
+    width: 100%;
+    margin: 5px 0;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
