@@ -50,7 +50,7 @@ const Navbar = () => {
         <div className="navbar__main">
           {/* Logo */}
           <div className="navbar__logo" onClick={handleLogolick}>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon" className="navbar__logoImage" />
+            <img src={`${process.env.PUBLIC_URL}/assets/images/amzlogo.png`} alt="Amazon" className="navbar__logoImage" />
           </div>
 
           {/* Delivery Location */}
@@ -86,7 +86,7 @@ const Navbar = () => {
           <div className="navbar__rightContainer">
             {/* Language */}
             <div className="navbar__language">
-              <img src="/in-flag.png" alt="IN" className="navbar__flag" />
+              <img src={`${process.env.PUBLIC_URL}/assets/images/flag.png`} a alt="IN" className="navbar__flag" />
               <span>EN</span>
             </div>
 

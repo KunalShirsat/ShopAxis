@@ -129,6 +129,44 @@
 .navbar__searchButton:hover {
     background-color: #f3a847;
 }
+/* Search */
+.navbar__search {
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+    height: 40px;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: white;
+    width: 100%;
+}
+
+.navbar__searchDropdown {
+    height: 100%;
+    padding: 0 10px;
+    background-color: #f3f3f3;
+    border: none;
+    border-right: 1px solid #cdcdcd;
+    outline: none;
+}
+
+.navbar__searchInput {
+    height: 100%;
+    width: 100%;
+    padding: 0 10px;
+    border: none;
+    font-size: 15px;
+    outline: none;
+}
+
+.navbar__searchButton {
+    height: 100%;
+    width: 45px;
+    background-color: #febd69;
+    border: none;
+    cursor: pointer;
+}
+
 
 /* Right Container */
 .navbar__rightContainer {
