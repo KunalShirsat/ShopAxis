@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     // Set the Maven tool to use
-                    def mvnHome = tool name: 'Maven 3.x', type: 'Maven'
+                    def mvnHome = tool name: 'Maven 3.9.9', type: 'Maven'
                     
                     // Navigate to the subdirectory before running the build
                     dir('productservice/ProductService') {
