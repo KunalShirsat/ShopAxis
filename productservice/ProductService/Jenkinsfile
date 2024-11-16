@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     // Navigate to the subdirectory before running the build
-                    dir('productservice/ProductService') {
+                    // dir('productservice/ProductService') {
                         bat 'mvn clean package -DskipTests'
                     }
                 }
