@@ -15,9 +15,12 @@ pipeline {
         stage('Build') {
             steps {
                 script {
+                    // Set the Maven tool to use
+                    def mvnHome = tool name: 'Maven 3.x', type: 'Maven'
+                    
                     // Navigate to the subdirectory before running the build
-                     dir('productservice/ProductService') {
-                        bat 'mvn clean package -DskipTests'
+                    dir('productservice/ProductService') {
+                        bat "${mvnHome}/bin/mvn clean package -DskipTests"
                     }
                 }
             }
@@ -49,9 +52,6 @@ pipeline {
         stage('Deploy to EC2') {
             steps {
                 script {
-                    // Use PowerShell or a suitable tool for SCP and SSH
-                    // If OpenSSH is installed and available, you can use PowerShell commands like below:
-                    // Replace these with the actual SSH and SCP logic as per your setup
                     bat 'scp productservice/ProductService/docker-compose.yml ec2-user@ec2-3-110-44-132.ap-south-1.compute.amazonaws.com:/home/ec2-user'
                     bat 'ssh ec2-user@ec2-3-110-44-132.ap-south-1.compute.amazonaws.com "docker-compose up -d"'
                 }
