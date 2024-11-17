@@ -5,6 +5,8 @@ pipeline {
         REGION = 'ap-south-1'
         ECR_REPO_NAME = 'shopaxis-repo'
         DOCKER_IMAGE = "${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${ECR_REPO_NAME}"
+ REPOSITORY_URI = "600627339676.dkr.ecr.ap-south-1.amazonaws.com/shopaxis-repo"
+
     }
     stages {
         stage('Checkout') {
