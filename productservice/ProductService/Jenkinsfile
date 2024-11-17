@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        AWS_ACCOUNT_ID = '600627339676'
+        AWS_ACCOUNT_ID = 'jenkins-user'
         REGION = 'ap-south-1'
         ECR_REPO_NAME = 'shopaxis-repo'
         DOCKER_IMAGE = "${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${ECR_REPO_NAME}"
@@ -12,7 +12,7 @@ pipeline {
 		
 	  stage('Login to AWS ECR') {
             steps {
-                withCredentials([aws(credentialsId: '6006-2733-9676')]) {
+                withCredentials([aws(credentialsId: 'jenkins-user')]) {
                     script {
                         bat "aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com"
                     }
