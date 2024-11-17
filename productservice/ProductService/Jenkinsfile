@@ -5,6 +5,8 @@ pipeline {
         REGION = 'ap-south-1'
         ECR_REPO_NAME = 'shopaxis-repo'
         DOCKER_IMAGE = "${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${ECR_REPO_NAME}"
+        AWS_ACCESS_KEY_ID = 'AKIAYXWBN4GODTTTF5UR'  // Hardcoded Access Key ID
+        AWS_SECRET_ACCESS_KEY = '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'  // Hardcoded Secret Access Key
     }
     stages {
         stage('Checkout') {
@@ -33,10 +35,9 @@ pipeline {
         }
         stage('Login to AWS ECR') {
             steps {
-                withCredentials([aws(credentialsId: 'jenkins-user')]) {
-                    script {
-                        bat "aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com"
-                    }
+                script {
+                    // Setting AWS credentials manually (by setting env vars directly)
+                    bat "aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com"
                 }
             }
         }
