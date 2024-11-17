@@ -6,6 +6,7 @@ pipeline {
         ECR_REPO_NAME = 'shopaxis-repo'
         DOCKER_IMAGE = "${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${ECR_REPO_NAME}"
         EC2_HOST = 'ec2-3-110-44-132.ap-south-1.compute.amazonaws.com'
+        
         EC2_USER = 'ec2-user'
         EC2_PATH = '/home/ec2-user'
     }
