@@ -25,6 +25,7 @@ pipeline {
             steps {
                 script {
                     dir('productservice/ProductService') {
+                        echo "Building Docker image ${DOCKER_IMAGE}:latest"
                         dockerImage = docker.build("${DOCKER_IMAGE}:latest")
                     }
                 }
@@ -42,6 +43,7 @@ pipeline {
         stage('Push to ECR') {
             steps {
                 script {
+                    echo "Pushing Docker image to ECR"
                     dockerImage.push("latest")
                 }
             }
