@@ -5,8 +5,6 @@ pipeline {
         REGION = 'ap-south-1'
         ECR_REPO_NAME = 'shopaxis-repo'
         DOCKER_IMAGE = "${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${ECR_REPO_NAME}"
-        EC2_INSTANCE_ID = 'i-0123456789abcdef0'  // EC2 instance ID for the target EC2 instance
-        EC2_HOST = 'ec2-3-110-44-132.ap-south-1.compute.amazonaws.com'
     }
     stages {
         stage('Checkout') {
@@ -34,9 +32,14 @@ pipeline {
         }
         stage('Login to AWS ECR') {
             steps {
-                withCredentials([aws(credentialsId: 'jenkins')]) {
+                // Use Jenkins credentials securely
+                withCredentials([usernamePassword(credentialsId: 'aws-credentials', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
                     script {
+                        // Configure AWS CLI to use the credentials
                         bat """
+                        aws configure set aws_access_key_id \$AWS_ACCESS_KEY_ID
+                        aws configure set aws_secret_access_key \$AWS_SECRET_ACCESS_KEY
+                        aws configure set region $REGION
                         aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com
                         """
                     }
@@ -53,7 +56,7 @@ pipeline {
         stage('Deploy to EC2 via AWS SSM') {
             steps {
                 script {
-                    // Copy docker-compose.yml file to the EC2 instance via AWS SSM
+                    // Copy docker-compose.yml file to EC2 instance via AWS SSM
                     bat """
                     aws ssm send-command --instance-ids $EC2_INSTANCE_ID --document-name "AWS-RunShellScript" --parameters 'commands=["mkdir -p /home/ec2-user/docker", "aws s3 cp s3://your-bucket-name/productservice/ProductService/docker-compose.yml /home/ec2-user/docker/docker-compose.yml"]' --region $REGION
                     """
