@@ -15,8 +15,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Navigate to the subdirectory before running the build
-                     dir('productservice/ProductService') {
+                    dir('productservice/ProductService') {
                         bat 'mvn clean package -DskipTests'
                     }
                 }
@@ -25,7 +24,6 @@ pipeline {
         stage('Docker Build') {
             steps {
                 script {
-                    // Navigate to the subdirectory for Docker build
                     dir('productservice/ProductService') {
                         dockerImage = docker.build("${DOCKER_IMAGE}:latest")
                     }
@@ -34,8 +32,10 @@ pipeline {
         }
         stage('Login to AWS ECR') {
             steps {
-                script {
-                    bat "aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com"
+                withCredentials([aws(credentialsId: ' jenkins-user')]) {
+                    script {
+                        bat "aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com"
+                    }
                 }
             }
         }
@@ -49,9 +49,6 @@ pipeline {
         stage('Deploy to EC2') {
             steps {
                 script {
-                    // Use PowerShell or a suitable tool for SCP and SSH
-                    // If OpenSSH is installed and available, you can use PowerShell commands like below:
-                    // Replace these with the actual SSH and SCP logic as per your setup
                     bat 'scp productservice/ProductService/docker-compose.yml ec2-user@ec2-3-110-44-132.ap-south-1.compute.amazonaws.com:/home/ec2-user'
                     bat 'ssh ec2-user@ec2-3-110-44-132.ap-south-1.compute.amazonaws.com "docker-compose up -d"'
                 }
