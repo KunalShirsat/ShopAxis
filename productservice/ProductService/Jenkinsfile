@@ -21,7 +21,16 @@ pipeline {
                 }
             }
         }
-       
+       stage('Docker Build') {
+            steps {
+                script {
+                    // Navigate to the subdirectory for Docker build
+                     {
+                        dockerImage = docker.build("${DOCKER_IMAGE}:latest")
+                    }
+                }
+            }
+        }
 
         // Uploading Docker images into AWS ECR
        stage('Pushing to ECR') {
