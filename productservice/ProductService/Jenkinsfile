@@ -3,13 +3,13 @@ pipeline {
     environment {
         AWS_ACCOUNT_ID = '600627339676'
         REGION = 'ap-south-1'
-        EC2_HOST = 'ec2-3-110-44-132.ap-south-1.compute.amazonaws.com'
-        EC2_USER = 'ec2-user'  // Ensure this is correct for your EC2 instance
-        EC2_PATH = '/home/ec2-user'  // Path where the image will be copied on EC2
-        DOCKER_IMAGE = 'shopaxis-productservice'  // Docker image name
+        EC2_HOST = '13.233.104.151'
+        EC2_USER = 'root' // Make sure this is correct for your EC2 instance
+        EC2_PATH = '/home/ec2-user' // Path where the image will be copied on EC2
+        DOCKER_IMAGE = 'shopaxis-productservice' // Adjust this name as necessary
         IMAGE_TAG = 'latest'
         IMAGE_TAR = "${DOCKER_IMAGE}_${IMAGE_TAG}.tar"
-        SCP_KEY_PATH = "C:\\key.pem"  // Path to your private SSH key (Windows format)
+        SCP_KEY_PATH = "C:\ssh key" // Path to your private SSH key
     }
     stages {
         stage('Checkout') {
@@ -42,7 +42,7 @@ pipeline {
                 script {
                     // Save the Docker image as a tar file
                     bat """
-                    docker save -o ${WORKSPACE}\\${IMAGE_TAR} ${DOCKER_IMAGE}:${IMAGE_TAG}
+                    docker save -o ${WORKSPACE}/${IMAGE_TAR} ${DOCKER_IMAGE}:${IMAGE_TAG}
                     """
                 }
             }
@@ -50,18 +50,15 @@ pipeline {
         stage('Deploy to EC2') {
             steps {
                 script {
-                    // Use SSH Agent to authenticate and run commands remotely
-                    sshagent(credentials: ['ssh']) {
-                        // Copy the saved Docker image tarball to EC2 instance using SCP
-                        sh """
-                        scp -i ${SCP_KEY_PATH} ${WORKSPACE}/${IMAGE_TAR} ${EC2_USER}@${EC2_HOST}:${EC2_PATH}
-                        """
-                        
-                        // SSH into EC2, load the Docker image, and start the container
-                        sh """
-                        ssh -i ${SCP_KEY_PATH} ${EC2_USER}@${EC2_HOST} "docker load -i ${EC2_PATH}/${IMAGE_TAR} && docker-compose -f ${EC2_PATH}/docker-compose.yml up -d"
-                        """
-                    }
+                    // Copy the saved Docker image tarball to EC2 instance using SCP
+                    bat """
+                    scp -i ${SCP_KEY_PATH} ${WORKSPACE}\\${IMAGE_TAR} ${EC2_USER}@${EC2_HOST}:${EC2_PATH}
+                    """
+                    
+                    // SSH into EC2, load the Docker image, and start the container
+                    bat """
+                    ssh -i ${SCP_KEY_PATH} ${EC2_USER}@${EC2_HOST} "docker load -i ${EC2_PATH}/${IMAGE_TAR} && docker-compose -f ${EC2_PATH}/docker-compose.yml up -d"
+                    """
                 }
             }
         }
