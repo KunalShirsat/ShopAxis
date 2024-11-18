@@ -51,7 +51,7 @@ pipeline {
             steps {
                 script {
                     // Use SSH Agent to authenticate and run commands remotely
-                    sshagent(credentials: ['your-ssh-credentials-id']) {
+                    sshagent(credentials: ['ssh']) {
                         // Copy the saved Docker image tarball to EC2 instance using SCP
                         sh """
                         scp -i ${SCP_KEY_PATH} ${WORKSPACE}/${IMAGE_TAR} ${EC2_USER}@${EC2_HOST}:${EC2_PATH}
