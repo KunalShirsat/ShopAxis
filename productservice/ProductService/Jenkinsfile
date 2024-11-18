@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        registry = "<6006-2733-9676>.dkr.ecr.ap-south-1.amazonaws.com/my-cid-repo"
+        registry = "public.ecr.aws/m0f0s7t1/my-cid-repo"
     }
 
     stages {
@@ -11,39 +11,33 @@ pipeline {
             }
         }
 
-       stage('Build') {
+        stage('Build') {
             steps {
                 script {
-                    // Navigate to the subdirectory before running the build
                     dir('productservice/ProductService') {
                         sh 'mvn clean package -DskipTests'
                     }
                 }
             }
         }
-       stage('Docker Build') {
+
+        stage('Docker Build') {
             steps {
                 script {
-                    // Navigate to the subdirectory for Docker build
-                     {
-                        dockerImage = docker.build("${DOCKER_IMAGE}:latest")
-                    }
+                    dockerImage = docker.build("${registry}:latest", ".")
                 }
             }
         }
 
-        // Uploading Docker images into AWS ECR
-       stage('Pushing to ECR') {
-            steps{  
+        stage('Pushing to ECR') {
+            steps {
                 script {
-                    sh 'aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/m0f0s7t1'
-					sh 'docker build -t public.ecr.aws/m0f0s7t1/my-cid-repo:latest .'
-					sh 'docker push public.ecr.aws/m0f0s7t1/my-cid-repo:latest'
+                    sh 'aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws'
+                    sh "docker push ${registry}:latest"
                 }
             }
         }
 
-        // Stopping Docker containers for cleaner Docker run
         stage('Stop previous containers') {
             steps {
                 sh 'docker stop myjavaContainer || true'
@@ -51,10 +45,9 @@ pipeline {
             }
         }
 
-        // Running Docker container
         stage('Docker Run') {
             steps {
-                sh 'docker run -d -p 8081:8081 --name myjavaContainer public.ecr.aws/m0f0s7t1/my-cid-repo:latest'
+                sh "docker run -d -p 8081:8081 --name myjavaContainer ${registry}:latest"
             }
         }
     }
