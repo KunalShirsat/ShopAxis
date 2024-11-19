@@ -1,81 +1,54 @@
 pipeline {
     agent any
     environment {
-        AWS_ACCOUNT_ID = '600627339676'
-        REGION = 'ap-south-1'
-        EC2_HOST = '13.201.99.74'
-        EC2_USER = 'root' // Make sure this is correct for your EC2 instance
-        EC2_PATH = '/home/ec2-user' // Path where the image will be copied on EC2
-        DOCKER_IMAGE = 'shopaxis-productservice' // Adjust this name as necessary
-        IMAGE_TAG = 'latest'
-        IMAGE_TAR = "${DOCKER_IMAGE}_${IMAGE_TAG}.tar"
-        SCP_KEY_PATH = "C:/productservice3key" // Path to your private SSH key
+        registry = "public.ecr.aws/m0f0s7t1/my-cid-repo"
     }
+
     stages {
-        stage('Checkout') {
+        stage('Cloning Git') {
             steps {
-                git branch: 'dev', url: 'https://github.com/KunalShirsat/ShopAxis.git'
+                checkout([$class: 'GitSCM', branches: [[name: '*/dev']], userRemoteConfigs: [[url: 'https://github.com/KunalShirsat/ShopAxis.git']]])
             }
         }
+
         stage('Build') {
             steps {
                 script {
-                    // Build the project using Maven (Windows batch)
                     dir('productservice/ProductService') {
-                        bat 'mvn clean package -DskipTests'
+                        sh 'mvn clean package -DskipTests'
                     }
                 }
             }
         }
+
         stage('Docker Build') {
             steps {
                 script {
-                    // Build Docker image locally
-                    dir('productservice/ProductService') {
-                        dockerImage = docker.build("${DOCKER_IMAGE}:${IMAGE_TAG}")
-                    }
+                    dockerImage = docker.build("${registry}:latest", ".")
                 }
             }
         }
-		
-		
-		
-		
-		  // Uploading Docker images into AWS ECR
-       stage('Pushing to ECR') {
-            steps{  
-                script {
-                    sh 'aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y5o9i8r6'
-					//sh 'docker build -t public.ecr.aws/y5o9i8r6/my-cid-repo:latest.'
-					sh 'docker push public.ecr.aws/y5o9i8r6/my-cid-repo:latest'
-                }
-            }
-        }
-		
-		
-		
-		
-		
-      
-        stage('Deploy to EC2') {
+
+        stage('Pushing to ECR') {
             steps {
                 script {
-                    // Copy the saved Docker image tarball to EC2 instance using SCP
-                    bat """
-                    scp -i ${SCP_KEY_PATH} ${WORKSPACE}\\${IMAGE_TAR} ${EC2_USER}@${EC2_HOST}:${EC2_PATH}
-                    """
-                    
-                    // SSH into EC2, load the Docker image, and start the container
-                    bat """
-                    ssh -i ${SCP_KEY_PATH} ${EC2_USER}@${EC2_HOST} "docker load -i ${EC2_PATH}/${IMAGE_TAR} && docker-compose -f ${EC2_PATH}/docker-compose.yml up -d"
-                    """
+                    sh 'aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws'
+                    sh "docker push ${registry}:latest"
                 }
             }
         }
-    }
-    post {
-        always {
-            cleanWs()  // Clean workspace after execution
+
+        stage('Stop previous containers') {
+            steps {
+                sh 'docker stop myjavaContainer || true'
+                sh 'docker rm myjavaContainer || true'
+            }
+        }
+
+        stage('Docker Run') {
+            steps {
+                sh "docker run -d -p 8081:8081 --name myjavaContainer ${registry}:latest"
+            }
         }
     }
 }
