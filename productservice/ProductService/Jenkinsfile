@@ -9,7 +9,7 @@ pipeline {
         DOCKER_IMAGE = 'shopaxis-productservice' // Adjust this name as necessary
         IMAGE_TAG = 'latest'
         IMAGE_TAR = "${DOCKER_IMAGE}_${IMAGE_TAG}.tar"
-        SCP_KEY_PATH = "C:\ssh key" // Path to your private SSH key
+        SCP_KEY_PATH = "C:/productservice3key" // Path to your private SSH key
     }
     stages {
         stage('Checkout') {
