@@ -3,13 +3,13 @@ pipeline {
     environment {
         AWS_ACCOUNT_ID = '600627339676'
         REGION = 'ap-south-1'
-        EC2_HOST = '13.233.104.151'
+        EC2_HOST = '13.201.99.74'
         EC2_USER = 'root' // Make sure this is correct for your EC2 instance
         EC2_PATH = '/home/ec2-user' // Path where the image will be copied on EC2
         DOCKER_IMAGE = 'shopaxis-productservice' // Adjust this name as necessary
         IMAGE_TAG = 'latest'
         IMAGE_TAR = "${DOCKER_IMAGE}_${IMAGE_TAG}.tar"
-        SCP_KEY_PATH = "C:\ssh key" // Path to your private SSH key
+        SCP_KEY_PATH = "C:/productservice3key" // Path to                your private SSH key
     }
     stages {
         stage('Checkout') {
