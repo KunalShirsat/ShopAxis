@@ -7,6 +7,7 @@ pipeline {
     stages {
         stage('Cloning Git') {
             steps {
+                // Clone the Git repository from the specified branch
                 checkout([$class: 'GitSCM', branches: [[name: '*/dev']], userRemoteConfigs: [[url: 'https://github.com/KunalShirsat/ShopAxis.git']]])
             }
         }
@@ -14,6 +15,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
+                    // Navigate to the service directory and build the project
                     dir('productservice/ProductService') {
                         sh 'mvn clean package -DskipTests'
                     }
@@ -24,6 +26,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 script {
+                    // Build the Docker image using the specified registry
                     dockerImage = docker.build("${registry}:latest", ".")
                 }
             }
@@ -32,14 +35,16 @@ pipeline {
         stage('Pushing to ECR') {
             steps {
                 script {
+                    // Authenticate and push the Docker image to the AWS ECR
                     sh 'aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws'
                     sh "docker push ${registry}:latest"
                 }
             }
         }
 
-        stage('Stop previous containers') {
+        stage('Stop Previous Containers') {
             steps {
+                // Stop and remove any existing containers to ensure a clean slate
                 sh 'docker stop myjavaContainer || true'
                 sh 'docker rm myjavaContainer || true'
             }
@@ -47,8 +52,19 @@ pipeline {
 
         stage('Docker Run') {
             steps {
+                // Run the Docker container using the built image
                 sh "docker run -d -p 8081:8081 --name myjavaContainer ${registry}:latest"
             }
+        }
+    }
+
+    post {
+        // Notify success or failure of the pipeline
+        success {
+            echo 'Pipeline executed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. Check the logs for details.'
         }
     }
 }
