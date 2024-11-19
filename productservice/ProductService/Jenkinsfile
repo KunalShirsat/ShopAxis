@@ -9,7 +9,7 @@ pipeline {
         DOCKER_IMAGE = 'shopaxis-productservice' // Adjust this name as necessary
         IMAGE_TAG = 'latest'
         IMAGE_TAR = "${DOCKER_IMAGE}_${IMAGE_TAG}.tar"
-        SCP_KEY_PATH = "C:/sshkey" // Path to your private SSH key
+        SCP_KEY_PATH = "C:\ssh key" // Path to your private SSH key
     }
     stages {
         stage('Checkout') {
@@ -37,16 +37,26 @@ pipeline {
                 }
             }
         }
-        stage('Save Docker Image as TAR') {
-            steps {
+		
+		
+		
+		
+		  // Uploading Docker images into AWS ECR
+       stage('Pushing to ECR') {
+            steps{  
                 script {
-                    // Save the Docker image as a tar file
-                    bat """
-                    docker save -o ${WORKSPACE}/${IMAGE_TAR} ${DOCKER_IMAGE}:${IMAGE_TAG}
-                    """
+                    sh 'aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y5o9i8r6'
+					//sh 'docker build -t public.ecr.aws/y5o9i8r6/my-cid-repo:latest.'
+					sh 'docker push public.ecr.aws/y5o9i8r6/my-cid-repo:latest'
                 }
             }
         }
+		
+		
+		
+		
+		
+      
         stage('Deploy to EC2') {
             steps {
                 script {
