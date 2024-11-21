@@ -53,7 +53,7 @@ const AmazonSignupForm = () => {
 
     if (validateForm()) {
       try {
-        const response = await axios.post('http://localhost:8081/api/v1/register', formData, {
+        const response = await axios.post('http://localhost:8084/api/v1/register', formData, {
           headers: {
             'Content-Type': 'application/json'
           }
