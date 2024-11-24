@@ -12,7 +12,7 @@ function Login() {
     console.log("Submitted Email/Mobile:", email);
     
     try {
-      const response = await fetch("http://localhost:8081/api/auth/login", {
+      const response = await fetch("http://localhost:8084/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }), // Ensure password is included

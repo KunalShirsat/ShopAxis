@@ -7,7 +7,7 @@ const ProductGrid = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/products/v1/getAll')
+    fetch('http://13.126.117.137:8686/api/products/v1/getAll')
       .then(response => response.json())
       .then(data => setProducts(data))
       .catch(error => console.error('Error fetching products:', error));

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -43,7 +44,7 @@ public class ProductController {
     }
 
     @GetMapping("v1/{id}")
-    public  List <Products> getProductById(@PathVariable String id){
+    public Optional<Products> getProductById(@PathVariable Long id){
        return productService.getProductById(id);
     }
 }
